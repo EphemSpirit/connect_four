@@ -12,12 +12,12 @@ class Board
   end
 
   def make_board
-    board = Array.new(@@columns){ Array.new(@@rows, " ") }
+    board = Array.new(@@rows){ Array.new(@@columns, " ") }
     return board
   end
 
   def print_board
-    i = 1
+    i = 0
     @board.each do |row|
       print @board[i]
       puts
