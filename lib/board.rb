@@ -58,4 +58,19 @@ class Board
     end
   end
 
+  def winner?
+  end
+
+  def find_vertical(board)
+  end
+
+  def find_horizontal(board)
+  end
+
+  def find_diagonals(board)
+  end
+
+  def find_anti_diagonals(board)
+  end
+
 end
