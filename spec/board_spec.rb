@@ -2,29 +2,34 @@ require "../lib/board.rb"
 
 describe Board do
 
-  before(:each) { @board = Board.new }
+  before(:each) { @board = Board.new.make_board }
 
   describe("#make_board") do
-    it "returns an 7x6 gamespace" do
-      expect(@board.make_board).to eq(Array.new(8){ Array.new(8, " ") })
+
+    it "makes six rows" do
+      expect(@board.length).to eq(6)
+    end
+
+    it "makes 7 columns" do
+      expect(@board[0].length).to eq(7)
     end
   end
 
   describe("#valid_move?") do
     it "returns true is space is empty" do
-      double(:choice => 2, :board[5][choice]=> [" "])
-      expect(valid_move?(2, 4)).to be_valid_move
+      double(:choice => 2, :board[5][@choice]=> [" "])
+      expect(valid_move?(@choice)).to be_valid_move
     end
 
     it "returns false is space taken" do
-      double(:choice => 2, :board[5][choice] => ["R"])
-      expect(valid_move?(2)).not_to be_valid_move
+      double(:choice => 2, :board[5][@choice] => ["R"])
+      expect(valid_move?(@choice)).not_to be_valid_move
     end
   end
 
   describe("#mark_square") do
     it "marks chosen square with player symbol" do
-      double(:choice => 2, :board[5][2] => [" "])
+      double(:choice => 2, :board[5][2] => [" "], :player.marker => "R")
       expect(mark_square(2)).to eq(:board[5][2] => ["R"])
       end
     end
