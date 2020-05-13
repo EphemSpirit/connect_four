@@ -8,7 +8,7 @@ class Board
 
   def initialize
     @board = make_board
-    game_rules
+    #game_rules
   end
 
   def make_board
@@ -59,6 +59,3 @@ class Board
   end
 
 end
-
-board = Board.new
-board.print_board
