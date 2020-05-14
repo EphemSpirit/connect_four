@@ -35,42 +35,45 @@ class Board
     choice = choice - 1
     if !(choice.between?(0, 6))
       puts "Please put in a valid column number (1 to 7)"
-      false
-    elsif board[0][choice - 1] != " "
+      return false
+    elsif board[0][choice] != " "
       puts "That column is filled, please try again"
-      false
+      return false
     end
     true
   end
 
   def mark_square(player, choice)
-    index = 0
-    move_made = false
-    column = @board.collect{ |row| row[choice-1] }
-    column.pop
-    column.reverse!
-    until move_made
-      if column[index] == " "
-        @board[@board.length - (index + 2)][choice - 1] = player.marker
-        move_made = true
+    if valid_move?
+      index = 0
+      move_made = false
+      column = @board.collect{ |row| row[choice-1] }
+      column.pop
+      column.reverse!
+      until move_made
+        if column[index] == " "
+          @board[@board.length - (index + 2)][choice - 1] = player.marker
+          move_made = true
+        end
+        index += 1
       end
-      index += 1
     end
   end
 
   def winner?
+    (find_vertical || find_horizontal || find_diagonal || find_anti_diagonal) ? true : false
   end
 
-  def find_vertical(board)
-  end
-
-  def find_horizontal(board)
-  end
-
-  def find_diagonals(board)
-  end
-
-  def find_anti_diagonals(board)
-  end
+  # def find_vertical(board)
+  # end
+  #
+  # def find_horizontal(board)
+  # end
+  #
+  # def find_diagonals(board)
+  # end
+  #
+  # def find_anti_diagonals(board)
+  # end
 
 end
