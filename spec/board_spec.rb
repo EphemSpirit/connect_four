@@ -1,5 +1,5 @@
 require "../lib/board.rb"
-require "../lib/player.rb"
+#require "../lib/player.rb"
 
 describe Board do
 
@@ -75,15 +75,16 @@ describe Board do
 
   end
 
-  describe("#find_diagonals") do
+  describe("#find_diagonal") do
 
-    xit "returns true if a diagonal match"
-      @board = [[" ", " ", " ", " ", " ", " ", " "],
-                [" ", " ", " ", " ", " ", " ", " "],
-                [" ", " ", " ", " ", " ", " ", "R"],
-                [" ", " ", " ", " ", " ", "R", " "],
+    it "returns true if a diagonal match"
+      board = [[" ", "R", " ", " ", " ", " ", " "],
+                [" ", " ", "R", " ", " ", " ", " "],
+                [" ", " ", " ", "R", " ", " ", " "],
                 [" ", " ", " ", " ", "R", " ", " "],
-                [" ", " ", " ", "R", " ", " ", " "]]
-      expect(@board.find_diagonals(@board)).to eq true
+                [" ", " ", " ", " ", " ", " ", " "],
+                [" ", " ", " ", " ", " ", " ", " "]]
+      choice = 1
+      expect(@board.find_diagonal(board, choice)).to eq true
     end
 end

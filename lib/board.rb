@@ -97,8 +97,9 @@ class Board
     arr.all? { |x| x == "R" || x == "B" } && arr.length == 4
   end
 
-  def find_anti_diagonals(board)
-    @board.transpose.find_diagonals(board, choice)
+  def find_anti_diagonal(board)
+    board = board.reverse; board.shift
+    find_diagonal(board, choice)
   end
 
 end
