@@ -64,6 +64,10 @@ class Board
     (find_vertical || find_horizontal || find_diagonal || find_anti_diagonal) ? true : false
   end
 
+  def draw?(board)
+    !winner? && board.none?{ |x| x == " " }
+  end
+
   def find_vertical(board)
     @board.transpose.find_horizontal(board)
   end
