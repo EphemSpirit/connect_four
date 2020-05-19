@@ -78,22 +78,13 @@ class Board
     end
   end
 
-  # def find_diagonals(board)
-  #   (-2..2).flat_map do |x|
-  #     i = x < 0 ? 0 : x
-  #     j = x < 0 ? -x : 0
-  #     d = 6 - x.abs
-  #     [d.times.map{ |k| board[i + k, j + k] }, d.times.map { |k| board[i + k, 5 - j - k ] }]
-  #   end
-  # end
-
   def find_diagonal(board, final = [])
     diagonal_length, row, position = 4, 2, 0
     until final.length == 6
       arr = []
-      dialgonal_length.times { |i| arr << board[i+row][i+position] }
+      diagonal_length.times { |i| arr << board[i+row][i+position] }
       final << arr
-      case collection.length
+      case final.length
       when 0...3 then row -= 1
       when 3 then position += 1
       when 4..6 then diagonal_length -= 1; position += 1
