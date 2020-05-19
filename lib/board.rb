@@ -83,18 +83,19 @@ class Board
   #   end
   # end
 
-  def find_diagonal(board, choice)
-    i = 0
-    j = choice
-    arr = []
-    until i == 3
-      arr << board[i][j]
-      arr << board[i+1][j+1] unless board[i+1][j+1].nil?
-      arr << board[i+2][j+2] unless board[i+2][j+2].nil?
-      arr << board[i+3][j+3] unless board[i+3][j+3].nil?
-      i += 1
+  def find_diagonal(board, final = [])
+    diagonal_length, row, position = 4, 2, 0
+    until final.length == 6
+      arr = []
+      dialgonal_length.times { |i| arr << board[i+row][i+position] }
+      final << arr
+      case collection.length
+      when 0...3 then row -= 1
+      when 3 then position += 1
+      when 4..6 then diagonal_length -= 1; position += 1
+      end
     end
-    arr.all? { |x| x == "R" || x == "B" } && arr.length == 4
+    final.any? { |arr| arr.all? { |x| x == "R" || x == "B" } }
   end
 
   def find_anti_diagonal(board)
