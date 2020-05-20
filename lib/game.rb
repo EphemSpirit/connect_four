@@ -27,6 +27,7 @@ class Game
   def play_round
     get_signs
     @board.make_board
+    @board.print_board
 
     until @@game_over
       puts "#{@current_player.marker}, your turn!"
@@ -34,7 +35,8 @@ class Game
       if @board.valid_move?(@choice)
         @board.mark_square(@current_player, @choice)
         @board.make_board
-        #game_over?
+        game_over?
+        @board.draw?
         switch_player
         @board.print_board
       end
@@ -50,3 +52,8 @@ class Game
   end
 
 end
+
+# p1 = Player.new
+# p2 = Player.new
+# game = Game.new(p1, p2)
+# game.play_round

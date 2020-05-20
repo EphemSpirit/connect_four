@@ -1,5 +1,6 @@
 require "../lib/board.rb"
-#require "../lib/player.rb"
+require "../lib/player.rb"
+require '../lib/game.rb'
 
 describe Board do
 
@@ -38,16 +39,17 @@ describe Board do
   describe("#mark_square") do
 
     it "marks chosen square with player symbol" do
-      @player = Player.new
-      @player.marker = "R"
-      expect(@board.mark_square(@player, 2)).to eq(:board[5][2] => "R")
+      player = Player.new
+      player.marker = "R"
+      @board.mark_square(player, 2)
+      expect(@board.board[5][1]).to include("R")
     end
 
   end
 
   describe("#winner?") do
 
-    xit "returns true when 4 like symbols connected" do
+    it "returns true when 4 like symbols connected" do
       double(:board[2] => ["R", "R", "R", "R", " ", " ", " ", " "])
       expect(@board.winner?(@board)).to be_winner
     end
@@ -66,9 +68,12 @@ describe Board do
   describe("#find_vertical") do
 
     it "returns true if 4 vertical" do
-      @board.board.each do |row|
-        row[2] = "R"
-      end
+      board = [[" ", " ", " ", " ", " ", " ", " "],
+               [" ", " ", " ", " ", " ", " ", " "],
+               [" ", " ", " ", " ", "R", " ", " "],
+               [" ", " ", " ", " ", "R", " ", " "],
+               [" ", " ", " ", " ", "R", " ", " "],
+               [" ", " ", " ", " ", "R", " ", " "]]
 
       expect(@board.find_vertical(@board)).to eq true
     end
@@ -76,15 +81,29 @@ describe Board do
   end
 
   describe("#find_diagonal") do
-
-    it "returns true if a diagonal match"
-      board = [[" ", "R", " ", " ", " ", " ", " "],
-                [" ", " ", "R", " ", " ", " ", " "],
-                [" ", " ", " ", "R", " ", " ", " "],
-                [" ", " ", " ", " ", "R", " ", " "],
-                [" ", " ", " ", " ", " ", " ", " "],
-                [" ", " ", " ", " ", " ", " ", " "]]
-      choice = 1
-      expect(@board.find_diagonal(board, choice)).to eq true
+    board = [[" ", "R", " ", " ", " ", " ", " "],
+             [" ", " ", "R", " ", " ", " ", " "],
+             [" ", " ", " ", "R", " ", " ", " "],
+             [" ", " ", " ", " ", "R", " ", " "],
+             [" ", " ", " ", " ", " ", " ", " "],
+             [" ", " ", " ", " ", " ", " ", " "]]
+    it "returns true when diagonal down to the right" do
+      expect(@board.find_diagonal(board)).to eq true
     end
+
+  end
+
+  describe("#find_anti_diagonal") do
+    board = [[" ", "R", " ", " ", " ", " ", " "],
+             [" ", " ", "R", " ", " ", " ", " "],
+             [" ", " ", " ", "R", " ", " ", " "],
+             [" ", " ", "R", " ", " ", " ", " "],
+             [" ", "R", " ", " ", " ", " ", " "],
+             ["R", " ", " ", " ", " ", " ", " "]]
+    it "returns true when diagonal down to the left" do
+      expect(@board.find_anti_diagonal(board)).to eq true
+    end
+
+  end
+
 end

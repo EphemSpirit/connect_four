@@ -95,7 +95,7 @@ class Board
 
   def find_anti_diagonal(board)
     board = board.reverse; board.shift
-    find_diagonal(board, choice)
+    find_diagonal(board)
   end
 
 end
