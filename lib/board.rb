@@ -44,24 +44,36 @@ class Board
   end
 
   def mark_square(player, choice)
-    if valid_move?
-      index = 0
-      move_made = false
-      column = @board.collect{ |row| row[choice-1] }
-      column.pop
-      column.reverse!
-      until move_made
-        if column[index] == " "
-          @board[@board.length - (index + 2)][choice - 1] = player.marker
-          move_made = true
-        end
-        index += 1
+    column = choice
+    (0..5).each do |row|
+      if row == 5
+        board[row][column] = player.marker
+      elsif
+        board[row+1][column] != " " && board[row][column] == " "
+        board[row][column] = player.marker
       end
     end
   end
 
+  # def mark_square(player, choice)
+  #   if valid_move?
+  #     index = 0
+  #     move_made = false
+  #     column = @board.collect{ |row| row[choice-1] }
+  #     column.pop
+  #     column.reverse!
+  #     until move_made
+  #       if column[index] == " "
+  #         @board[@board.length - (index + 2)][choice - 1] = player.marker
+  #         move_made = true
+  #       end
+  #       index += 1
+  #     end
+  #   end
+  # end
+
   def winner?
-    (find_vertical || find_horizontal || find_diagonal || find_anti_diagonal) ? true : false
+    (find_vertical(board) || find_horizontal(board) || find_diagonal(board) || find_anti_diagonal(board)) ? true : false
   end
 
   def draw?(board)
@@ -69,7 +81,11 @@ class Board
   end
 
   def find_vertical(board)
-    @board.transpose.find_horizontal(board)
+    # @board.transpose.find_horizontal(board)
+    board = board.transpose
+    @board.any? do |row|
+      row.each_cons(4).any?{ |a, b, c, d| a != " " && a == b && b == c && c == d }
+    end
   end
 
   def find_horizontal(board)

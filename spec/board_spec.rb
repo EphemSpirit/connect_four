@@ -42,7 +42,7 @@ describe Board do
       player = Player.new
       player.marker = "R"
       @board.mark_square(player, 2)
-      expect(@board.board[5][1]).to include("R")
+      expect(@board.board[5][1]).to eq("R")
     end
 
   end
@@ -50,7 +50,7 @@ describe Board do
   describe("#winner?") do
 
     it "returns true when 4 like symbols connected" do
-      double(:board[2] => ["R", "R", "R", "R", " ", " ", " ", " "])
+      @board.board[2] = ["R", "R", "R", "R", " ", " ", " ", " "]
       expect(@board.winner?(@board)).to be_winner
     end
 
