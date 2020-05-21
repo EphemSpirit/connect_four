@@ -5,7 +5,8 @@ class Game
 
   @@game_over = false
 
-  attr_reader :current_player, :other_player, :choice
+  attr_reader :current_player, :other_player
+  attr_accessor :choice, :marker
 
   def initialize(p1, p2, board = Board.new)
     @p1 = p1
@@ -36,7 +37,7 @@ class Game
         @board.mark_square(@current_player, @choice)
         @board.make_board
         game_over?
-        @board.draw?
+        @board.draw?(@board)
         switch_player
         @board.print_board
       end

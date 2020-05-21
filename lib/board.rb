@@ -12,8 +12,8 @@ class Board
   end
 
   def make_board
-    board = Array.new(@@rows){ Array.new(@@columns, " ") }
-    return board
+    @board = Array.new(@@rows){ Array.new(@@columns, " ") }
+    return @board
   end
 
   def print_board
@@ -43,41 +43,41 @@ class Board
     return true
   end
 
-  def mark_square(player, choice)
-    column = choice
-    (0..5).each do |row|
-      if row == 5
-        board[row][column] = player.marker
-      elsif
-        board[row+1][column] != " " && board[row][column] == " "
-        board[row][column] = player.marker
-      end
-    end
-  end
-
   # def mark_square(player, choice)
-  #   if valid_move?
-  #     index = 0
-  #     move_made = false
-  #     column = @board.collect{ |row| row[choice-1] }
-  #     column.pop
-  #     column.reverse!
-  #     until move_made
-  #       if column[index] == " "
-  #         @board[@board.length - (index + 2)][choice - 1] = player.marker
-  #         move_made = true
-  #       end
-  #       index += 1
+  #   column = choice - 1
+  #   (0..5).each do |row|
+  #     if row == 5
+  #       board[row][column] = player.marker
+  #     elsif
+  #       board[row+1][column] != " " && board[row][column] == " "
+  #       board[row][column] = player.marker
   #     end
   #   end
   # end
 
+  def mark_square(player, choice)
+    if valid_move?(choice)
+      index = 0
+      move_made = false
+      column = @board.collect{ |row| row[choice-1] }
+      column.pop
+      column.reverse!
+      until move_made
+        if column[index] == " "
+          @board[@board.length - (index + 2)][choice - 1] = player.marker
+          move_made = true
+        end
+        index += 1
+      end
+    end
+  end
+
   def winner?
-    (find_vertical(board) || find_horizontal(board) || find_diagonal(board) || find_anti_diagonal(board)) ? true : false
+    (find_vertical(@board) || find_horizontal(@board) || find_diagonal(@board) || find_anti_diagonal(@board)) ? true : false
   end
 
   def draw?(board)
-    !winner? && board.none?{ |x| x == " " }
+    !winner? && @board.none?{ |x| x == " " }
   end
 
   def find_vertical(board)
@@ -98,7 +98,7 @@ class Board
     diagonal_length, row, position = 4, 2, 0
     until final.length == 6
       arr = []
-      diagonal_length.times { |i| arr << board[i+row][i+position] }
+      diagonal_length.times { |i| arr << @board[i+row][i+position] }
       final << arr
       case final.length
       when 0...3 then row -= 1
