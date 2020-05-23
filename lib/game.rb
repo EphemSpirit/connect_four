@@ -49,8 +49,15 @@ class Game
   end
 
   def game_over?
-    @@game_over = true if @board.winner? || @board.draw?
+    if @board.winner?
+      puts "#{@current_player.marker} wins!"
+      @@game_over = true
+    elsif @board.draw?
+      puts "It's a draw, better luck next time!"
+      @@game_over = true
+    end
   end
+
 
 end
 
