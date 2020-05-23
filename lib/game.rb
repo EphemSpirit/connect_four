@@ -49,12 +49,12 @@ class Game
   end
 
   def game_over?
-    @@game_over = true if @board.winner? || @board.draw?(@board)
+    @@game_over = true if @board.winner? || @board.draw?
   end
 
 end
 
-# p1 = Player.new
-# p2 = Player.new
-# game = Game.new(p1, p2)
-# game.play_round
+p1 = Player.new
+p2 = Player.new
+game = Game.new(p1, p2)
+game.play_round

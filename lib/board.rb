@@ -45,18 +45,6 @@ class Board
     return true
   end
 
-  # def mark_square(player, choice)
-  #   column = choice - 1
-  #   (0..5).each do |row|
-  #     if row == 5
-  #       board[row][column] = player.marker
-  #     elsif
-  #       board[row+1][column] != " " && board[row][column] == " "
-  #       board[row][column] = player.marker
-  #     end
-  #   end
-  # end
-
   def mark_square(player, choice)
     if valid_move?(choice)
       index = 0
@@ -75,28 +63,31 @@ class Board
   end
 
   def winner?
-    (find_vertical(@board) || find_horizontal(@board) || find_diagonal(@board) || find_anti_diagonal(@board)) ? true : false
+    (find_vertical || find_horizontal || find_diagonal || find_anti_diagonal) ? true : false
   end
 
-  def draw?(board)
-    !winner? && @board.any? { |row| row.none?{ |x| x == " " } }
+  def draw?
+    board = @board
+    !winner? && board.all? { |row| row.none?{ |x| x == " " } }
   end
 
-  def find_vertical(board)
-    board = @board.transpose
+  def find_vertical
+    transposed_board = @board.transpose
     #binding.pry
+    transposed_board.any? do |row|
+      row.each_cons(4).any?{ |a, b, c, d| a != " " && a == b && b == c && c == d }
+    end
+  end
+
+  def find_horizontal
+    board = @board
     board.any? do |row|
       row.each_cons(4).any?{ |a, b, c, d| a != " " && a == b && b == c && c == d }
     end
   end
 
-  def find_horizontal(board)
-    @board.any? do |row|
-      row.each_cons(4).any?{ |a, b, c, d| a != " " && a == b && b == c && c == d }
-    end
-  end
-
-  def find_diagonal(board, final = [])
+  def find_diagonal(final = [])
+    board = @board
     diagonal_length, row, position = 4, 2, 0
     until final.length == 6
       arr = []
@@ -108,12 +99,25 @@ class Board
       when 4..6 then diagonal_length -= 1; position += 1
       end
     end
-    final.any? { |arr| arr.all? { |x| x == "R" || x == "B" } }
+    #binding.pry
+    (final.any? { |arr| arr.all? { |x| x == "R" } }) || (final.any? { |arr| arr.all? { |x| x == "B" } })
   end
 
-  def find_anti_diagonal(board)
-    board = board.reverse
-    find_diagonal(board)
+  def find_anti_diagonal(final = [])
+    reversed_board = @board.reverse
+    diagonal_length, row, position = 4, 2, 0
+    until final.length == 6
+      arr = []
+      diagonal_length.times { |i| arr << reversed_board[i+row][i+position] }
+      final << arr
+      case final.length
+      when 0...3 then row -= 1
+      when 3 then position += 1
+      when 4..6 then diagonal_length -= 1; position += 1
+      end
+    end
+    #binding.pry
+    (final.any? { |arr| arr.all? { |x| x == "R" } }) || (final.any? { |arr| arr.all? { |x| x == "B" } })
   end
 
 end

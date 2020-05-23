@@ -51,7 +51,7 @@ describe Board do
 
     it "returns true when horizontal" do
       @board.board[2] = ["R", "R", "R", "R", " ", " ", " ", " "]
-      expect(@board.winner?).to be_winner
+      expect(@board.winner?).to eq true
     end
 
   end
@@ -60,7 +60,7 @@ describe Board do
 
     it "returns true if 4 horizontal" do
       @board.board[2] = ["R", "R", "R", "R", " ", " ", " "]
-      expect(@board.find_horizontal(@board)).to eq true
+      expect(@board.find_horizontal).to eq true
     end
 
   end
@@ -75,7 +75,7 @@ describe Board do
                [" ", " ", " ", " ", "R", " ", " "],
                [" ", " ", " ", " ", "R", " ", " "]]
 
-      expect(@board.find_vertical(board)).to eq true
+      expect(@board.find_vertical).to eq true
     end
 
   end
@@ -88,7 +88,7 @@ describe Board do
              [" ", " ", " ", " ", " ", " ", " "],
              [" ", " ", " ", " ", " ", " ", " "]]
     it "returns true when diagonal down to the right" do
-      expect(@board.find_diagonal(board)).to eq true
+      expect(@board.find_diagonal).to eq true
     end
 
   end
@@ -101,7 +101,7 @@ describe Board do
              [" ", "R", " ", " ", " ", " ", " "],
              ["R", " ", " ", " ", " ", " ", " "]]
     it "returns true when diagonal down to the left" do
-      expect(@board.find_anti_diagonal(board)).to eq true
+      expect(@board.find_anti_diagonal).to eq true
     end
 
   end
