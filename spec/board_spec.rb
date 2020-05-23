@@ -49,9 +49,9 @@ describe Board do
 
   describe("#winner?") do
 
-    it "returns true when 4 like symbols connected" do
+    it "returns true when horizontal" do
       @board.board[2] = ["R", "R", "R", "R", " ", " ", " ", " "]
-      expect(@board.winner?(@board)).to be_winner
+      expect(@board.winner?).to be_winner
     end
 
   end
@@ -60,7 +60,7 @@ describe Board do
 
     it "returns true if 4 horizontal" do
       @board.board[2] = ["R", "R", "R", "R", " ", " ", " "]
-      expect(@board.find_horizontal(:board)).to eq true
+      expect(@board.find_horizontal(@board)).to eq true
     end
 
   end
@@ -75,7 +75,7 @@ describe Board do
                [" ", " ", " ", " ", "R", " ", " "],
                [" ", " ", " ", " ", "R", " ", " "]]
 
-      expect(@board.find_vertical(@board)).to eq true
+      expect(@board.find_vertical(board)).to eq true
     end
 
   end

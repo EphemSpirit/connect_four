@@ -1,12 +1,14 @@
 require '../lib/player.rb'
+require 'stringio'
 
 describe Player do
 
   describe("#get_marker") do
     player = Player.new
     it "assigns player marker" do
-      player.marker = "R"
-      expect(player.get_marker).to eq("R")
+      allow($stdin).to receive(:gets).and_return("R")
+      player.marker = $stdin.gets
+      expect(player.get_marker).to be == "R"
     end
   end
 end

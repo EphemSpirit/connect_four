@@ -1,5 +1,6 @@
 require_relative "board"
 require_relative "player"
+require 'pry'
 
 class Game
 
@@ -35,9 +36,8 @@ class Game
       @choice = gets.chomp.to_i
       if @board.valid_move?(@choice)
         @board.mark_square(@current_player, @choice)
-        @board.make_board
+        #binding.pry
         game_over?
-        @board.draw?(@board)
         switch_player
         @board.print_board
       end
@@ -49,12 +49,12 @@ class Game
   end
 
   def game_over?
-    @@game_over = true if @board.winner?
+    @@game_over = true if @board.winner? || @board.draw?(@board)
   end
 
 end
 
-p1 = Player.new
-p2 = Player.new
-game = Game.new(p1, p2)
-game.play_round
+# p1 = Player.new
+# p2 = Player.new
+# game = Game.new(p1, p2)
+# game.play_round

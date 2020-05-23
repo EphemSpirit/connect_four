@@ -1,3 +1,5 @@
+require 'pry'
+
 class Board
 
   attr_reader :board
@@ -60,11 +62,11 @@ class Board
       index = 0
       move_made = false
       column = @board.collect{ |row| row[choice-1] }
-      column.pop
       column.reverse!
+      #binding.pry
       until move_made
         if column[index] == " "
-          @board[@board.length - (index + 2)][choice - 1] = player.marker
+          @board[@board.length - (index + 1)][choice - 1] = player.marker
           move_made = true
         end
         index += 1
@@ -77,13 +79,13 @@ class Board
   end
 
   def draw?(board)
-    !winner? && @board.none?{ |x| x == " " }
+    !winner? && @board.any? { |row| row.none?{ |x| x == " " } }
   end
 
   def find_vertical(board)
-    # @board.transpose.find_horizontal(board)
-    board = board.transpose
-    @board.any? do |row|
+    board = @board.transpose
+    #binding.pry
+    board.any? do |row|
       row.each_cons(4).any?{ |a, b, c, d| a != " " && a == b && b == c && c == d }
     end
   end
@@ -110,7 +112,7 @@ class Board
   end
 
   def find_anti_diagonal(board)
-    board = board.reverse; board.shift
+    board = board.reverse
     find_diagonal(board)
   end
 
