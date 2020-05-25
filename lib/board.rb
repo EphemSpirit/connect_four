@@ -32,14 +32,13 @@ class Board
     puts "To select a row, pick a number between 1 and 7\n\n"
   end
 
-  #fix this
   def valid_move?(choice)
     choice = choice - 1
     if !(choice.between?(0, 6))
-      #puts "Please put in a valid column number (1 to 7)"
+      puts "Please put in a valid column number (1 to 7)"
       return false
     elsif board[0][choice] != " "
-      #puts "That column is filled, please try again"
+      puts "That column is filled, please try again"
       return false
     end
     return true
